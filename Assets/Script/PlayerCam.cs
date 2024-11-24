@@ -6,8 +6,10 @@ public class PlayerCam : MonoBehaviour
     public float sensX = 15f;
     public float sensY = 15f;
 
-    public Transform orientation; 
-    public Camera playerCamera;  
+    public Transform orientation;
+    public Transform Hand;
+    public Transform playerCamera;
+    public float cameraAcceleration = 5f;
 
     private float xRotation = 0f; 
     private float yRotation = 0f; 
@@ -44,7 +46,7 @@ public class PlayerCam : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        playerCamera.fieldOfView = 60f;
+        
     }
 
     private void Update()
@@ -52,19 +54,24 @@ public class PlayerCam : MonoBehaviour
         float mouseX = lookInput.x * sensX * Time.deltaTime;
         float mouseY = lookInput.y * sensY * Time.deltaTime;
 
-
         Debug.Log("Horizontal Input (X): " + lookInput.x);
 
         yRotation += mouseX; 
-        xRotation -= mouseY; 
+        xRotation += mouseY; 
 
-        
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        
-        playerCamera.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0f);
-        
-        
-        orientation.rotation = Quaternion.Euler(0f, yRotation, 0f);
+        Hand.localRotation = Quaternion.Euler(-xRotation, yRotation, 0);
+
+        transform.localRotation = 
+            Quaternion.Lerp(transform.localRotation,
+            Quaternion.Euler(-xRotation, yRotation, 0),
+            cameraAcceleration * Time.deltaTime);
+
+        orientation.localRotation = 
+            Quaternion.Lerp(orientation.localRotation,
+            Quaternion.Euler(0f, yRotation, 0f),
+            cameraAcceleration * Time.deltaTime);
     }
+
 }

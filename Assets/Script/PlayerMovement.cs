@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using System.Collections;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed;
@@ -12,6 +12,12 @@ public class PlayerMovement : MonoBehaviour
     public bool grounded;
 
     public Transform orientation;
+
+    // Flash Var
+    public GameObject flash;
+    [SerializeField]
+    private bool isFlashActive = false;
+    private Coroutine flashCoroutine;
 
     private Vector2 moveInput;
     private Vector3 moveDirection;
@@ -29,24 +35,59 @@ public class PlayerMovement : MonoBehaviour
         inputActions.Enable();
         inputActions.Gameplay.Move.performed += OnMove;
         inputActions.Gameplay.Move.canceled += OnMove;
+        inputActions.Gameplay.Flash.performed += OnFlash;
     }
 
     private void OnDisable()
     {
         inputActions.Gameplay.Move.performed -= OnMove;
         inputActions.Gameplay.Move.canceled -= OnMove;
+        inputActions.Gameplay.Flash.performed -= OnFlash;
         inputActions.Disable();
     }
 
+    // Move Script
     private void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
+    }
+
+    // Camera Flash
+    private void OnFlash(InputAction.CallbackContext context)
+    {
+        // Toggle the flash
+        if (!isFlashActive) // Prevent overlapping activations
+        {
+            flashCoroutine = StartCoroutine(FlashRoutine());
+        }
+    }
+
+    private IEnumerator FlashRoutine()
+    {
+        // Activate the flashlight and set it to active state
+        isFlashActive = true;
+        flash.SetActive(true);
+
+        // Wait for 3 seconds
+        yield return new WaitForSeconds(3f);
+
+        // Deactivate the flashlight and reset the state
+        flash.SetActive(false);
+        isFlashActive = false;
+
+        // Clear the coroutine reference
+        flashCoroutine = null;
     }
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+
+        if (flash != null)
+        {
+            flash.SetActive(false);
+        }
     }
 
     private void Update()
@@ -55,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
 
         SpeedControl();
 
-        // Handle drag
+        // Handles drag
         rb.linearDamping = grounded ? groundDrag : 0;
     }
 
