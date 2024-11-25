@@ -3,22 +3,33 @@ using UnityEngine.InputSystem;
 using System.Collections;
 public class PlayerMovement : MonoBehaviour
 {
+    // Speed Variables
     public float moveSpeed;
     public float groundDrag;
     public float airMultiplier;
 
+    // Bool checks for isGrounded checks
     public float playerHeight;
     public LayerMask whatIsGround;
     public bool grounded;
 
-    public Transform orientation;
+    public Transform orientation; // Grabs player orientation
 
     // Flash Var
     public GameObject flash;
-    [SerializeField]
-    private bool isFlashActive = false;
+    
+    private Light flashLight; // Light Component
+    public float flashIntensity = 50f; // Light intensity
+    public float fadeDuration = 3f; // Duration of Flash fade
+    [SerializeField] private bool isFlashActive = false;
     private Coroutine flashCoroutine;
 
+    // Cooldown Variables
+    public float cooldownTime = 5f;
+    private bool canFlash = true; 
+
+
+    // Movement Varaibles
     private Vector2 moveInput;
     private Vector3 moveDirection;
     public Rigidbody rb;
@@ -36,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
         inputActions.Gameplay.Move.performed += OnMove;
         inputActions.Gameplay.Move.canceled += OnMove;
         inputActions.Gameplay.Flash.performed += OnFlash;
+
     }
 
     private void OnDisable()
@@ -55,28 +67,55 @@ public class PlayerMovement : MonoBehaviour
     // Camera Flash
     private void OnFlash(InputAction.CallbackContext context)
     {
-        // Toggle the flash
-        if (!isFlashActive) // Prevent overlapping activations
+        // Check if flash can be triggered
+        if (canFlash && !isFlashActive)
         {
+            // If yes, start the flash
             flashCoroutine = StartCoroutine(FlashRoutine());
         }
     }
 
     private IEnumerator FlashRoutine()
     {
-        // Activate the flashlight and set it to active state
+        // Activate Flash
         isFlashActive = true;
         flash.SetActive(true);
+        flashLight.intensity = flashIntensity; 
 
-        // Wait for 3 seconds
-        yield return new WaitForSeconds(3f);
+        // Flash duration
+        yield return new WaitForSeconds(0.2f);
 
-        // Deactivate the flashlight and reset the state
+        float elapsedTime = 0f;
+        float startIntensity = flashLight.intensity;
+
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            flashLight.intensity = Mathf.Lerp(startIntensity, 0f, elapsedTime / fadeDuration);
+            yield return null;
+        }
+
+        // Ensure final intensity is 0
+        flashLight.intensity = 0f;
+
+        // Deactivate the flash after fadeaway
         flash.SetActive(false);
         isFlashActive = false;
 
-        // Clear the coroutine reference
-        flashCoroutine = null;
+        // Start the cooldown timer
+        StartCoroutine(FlashCooldown());
+    }
+
+    private IEnumerator FlashCooldown()
+    {
+        // Disable the flash during cooldown
+        canFlash = false;
+
+        // Wait for the cooldown period to end
+        yield return new WaitForSeconds(cooldownTime);
+
+        // can flash again
+        canFlash = true;
     }
 
     private void Start()
@@ -87,6 +126,11 @@ public class PlayerMovement : MonoBehaviour
         if (flash != null)
         {
             flash.SetActive(false);
+            flashLight = flash.GetComponent<Light>(); // Get the Light component
+            if (flashLight == null)
+            {
+                Debug.LogError("No Light component found on the flashlight GameObject!");
+            }
         }
     }
 
@@ -95,6 +139,8 @@ public class PlayerMovement : MonoBehaviour
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
         SpeedControl();
+
+        
 
         // Handles drag
         rb.linearDamping = grounded ? groundDrag : 0;
@@ -137,4 +183,6 @@ public class PlayerMovement : MonoBehaviour
 
         return moveDir.normalized; 
     }
+
+
 }
