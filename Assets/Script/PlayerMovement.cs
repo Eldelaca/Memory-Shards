@@ -1,6 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+
+/// <summary>
+/// 
+/// Player code movement 
+/// 
+/// </summary>
+
 public class PlayerMovement : MonoBehaviour
 {
     // Speed Variables
@@ -15,12 +22,19 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform orientation; // Grabs player orientation
 
+    public Camera playerCamera;
+
+    // Enemy Detection Variables
+    public LayerMask enemyLayer; 
+    public float flashRange = 3f; 
+    public float flashRadius = 5f; 
+
     // Flash Var
     public GameObject flash;
     
     private Light flashLight; // Light Component
     public float flashIntensity = 50f; // Light intensity
-    public float fadeDuration = 3f; // Duration of Flash fade
+    public float fadeDuration = 3f; // Duration of flash fade
     [SerializeField] private bool isFlashActive = false;
     private Coroutine flashCoroutine;
 
@@ -85,6 +99,9 @@ public class PlayerMovement : MonoBehaviour
         // Flash duration
         yield return new WaitForSeconds(0.2f);
 
+        // Detect Enemies
+        DetectEnemies();
+
         float elapsedTime = 0f;
         float startIntensity = flashLight.intensity;
 
@@ -95,14 +112,14 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
 
-        // Ensure final intensity is 0
+        
         flashLight.intensity = 0f;
 
-        // Deactivate the flash after fadeaway
+        // Deactivate after fadeaway
         flash.SetActive(false);
         isFlashActive = false;
 
-        // Start the cooldown timer
+        // coolsdown
         StartCoroutine(FlashCooldown());
     }
 
@@ -114,9 +131,29 @@ public class PlayerMovement : MonoBehaviour
         // Wait for the cooldown period to end
         yield return new WaitForSeconds(cooldownTime);
 
-        // can flash again
+        // if flash can be pressed again
         canFlash = true;
     }
+
+    private void DetectEnemies()
+    {
+        // changes the spehere collider infront of the player
+        Vector3 sphereCenter = playerCamera.transform.position + playerCamera.transform.forward * flashRange;
+
+        // creates the sphere infront of the player
+        Collider[] hitColliders = Physics.OverlapSphere(sphereCenter, flashRadius, enemyLayer);
+
+        foreach (Collider hitCollider in hitColliders)
+        {
+            Enemy enemy = hitCollider.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeFlashEffect();
+            }
+        }
+    }
+
+
 
     private void Start()
     {
@@ -184,5 +221,15 @@ public class PlayerMovement : MonoBehaviour
         return moveDir.normalized; 
     }
 
+
+
+    private void OnDrawGizmos()
+    {
+
+
+        Gizmos.color = Color.blue;
+        Vector3 sphereCenter = Camera.main.transform.position + Camera.main.transform.forward * flashRange;
+        Gizmos.DrawWireSphere(sphereCenter, flashRadius);
+    }
 
 }
