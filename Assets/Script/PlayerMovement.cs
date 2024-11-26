@@ -86,6 +86,10 @@ public class PlayerMovement : MonoBehaviour
         {
             // If yes, start the flash
             flashCoroutine = StartCoroutine(FlashRoutine());
+
+            StaminaBar.instance.UseStamina(0.1f);
+            StaminaBar.instance.UseStamina(15);
+
         }
     }
 
