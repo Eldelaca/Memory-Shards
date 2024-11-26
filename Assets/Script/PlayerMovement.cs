@@ -229,8 +229,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-
-
         Gizmos.color = Color.blue;
         Vector3 sphereCenter = Camera.main.transform.position + Camera.main.transform.forward * flashRange;
         Gizmos.DrawWireSphere(sphereCenter, flashRadius);
