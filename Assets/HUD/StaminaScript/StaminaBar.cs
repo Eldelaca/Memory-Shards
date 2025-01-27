@@ -8,6 +8,9 @@ public class StaminaBar : MonoBehaviour
     // Start is called before the first frame update
     public Slider staminaBar;
 
+    // Flash Stamina
+    public PlayerMovement playerMovement;
+
     private float maxStamina = 100f;
     private float currentStamina;
 
@@ -28,12 +31,18 @@ public class StaminaBar : MonoBehaviour
         staminaBar.value = maxStamina;   
     }
 
-    public void UseStamina(float amount)
+    public float GetCurrentStamina()
+    {
+        return currentStamina;
+    }
+
+    public bool UseStamina(float amount)
     {
         if(currentStamina - amount >= 0)
         {
             currentStamina -= amount;
             staminaBar.value = currentStamina;
+            return true;
 
             /*
             if(regen != null)
@@ -45,6 +54,7 @@ public class StaminaBar : MonoBehaviour
         }
         else
         {
+            return false;
             Debug.Log("Not enough stamina");
         }
 

@@ -54,7 +54,7 @@ public class PlayerCam : MonoBehaviour
         float mouseX = lookInput.x * sensX * Time.deltaTime;
         float mouseY = lookInput.y * sensY * Time.deltaTime;
 
-        Debug.Log("Horizontal Input (X): " + lookInput.x);
+        
 
         yRotation += mouseX; 
         xRotation += mouseY; 

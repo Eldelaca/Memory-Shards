@@ -62,6 +62,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Next"",
+                    ""type"": ""Button"",
+                    ""id"": ""09812b5b-6f43-4a3b-b107-99bb0f91ee2d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Prev"",
+                    ""type"": ""Button"",
+                    ""id"": ""5017452a-b636-4181-b3fb-1ddfc1c8e58a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -163,6 +181,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Flash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""08e71b30-0b65-4364-805d-505000d993af"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""Next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b23d597f-30d3-4195-86db-4abf8c1f47a7"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""Prev"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -198,6 +238,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
         m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
         m_Gameplay_Flash = m_Gameplay.FindAction("Flash", throwIfNotFound: true);
+        m_Gameplay_Next = m_Gameplay.FindAction("Next", throwIfNotFound: true);
+        m_Gameplay_Prev = m_Gameplay.FindAction("Prev", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -268,6 +310,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Move;
     private readonly InputAction m_Gameplay_Look;
     private readonly InputAction m_Gameplay_Flash;
+    private readonly InputAction m_Gameplay_Next;
+    private readonly InputAction m_Gameplay_Prev;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -276,6 +320,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Gameplay_Move;
         public InputAction @Look => m_Wrapper.m_Gameplay_Look;
         public InputAction @Flash => m_Wrapper.m_Gameplay_Flash;
+        public InputAction @Next => m_Wrapper.m_Gameplay_Next;
+        public InputAction @Prev => m_Wrapper.m_Gameplay_Prev;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -297,6 +343,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Flash.started += instance.OnFlash;
             @Flash.performed += instance.OnFlash;
             @Flash.canceled += instance.OnFlash;
+            @Next.started += instance.OnNext;
+            @Next.performed += instance.OnNext;
+            @Next.canceled += instance.OnNext;
+            @Prev.started += instance.OnPrev;
+            @Prev.performed += instance.OnPrev;
+            @Prev.canceled += instance.OnPrev;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -313,6 +365,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Flash.started -= instance.OnFlash;
             @Flash.performed -= instance.OnFlash;
             @Flash.canceled -= instance.OnFlash;
+            @Next.started -= instance.OnNext;
+            @Next.performed -= instance.OnNext;
+            @Next.canceled -= instance.OnNext;
+            @Prev.started -= instance.OnPrev;
+            @Prev.performed -= instance.OnPrev;
+            @Prev.canceled -= instance.OnPrev;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -354,5 +412,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnFlash(InputAction.CallbackContext context);
+        void OnNext(InputAction.CallbackContext context);
+        void OnPrev(InputAction.CallbackContext context);
     }
 }

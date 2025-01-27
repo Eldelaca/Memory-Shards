@@ -40,7 +40,12 @@ public class PlayerMovement : MonoBehaviour
 
     // Cooldown Variables
     public float cooldownTime = 5f;
-    private bool canFlash = true; 
+    private bool canFlash = true;
+
+    // Switching
+    public GameObject CameraItem;
+    public GameObject AlarmItem;
+
 
 
     // Movement Varaibles
@@ -49,6 +54,8 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody rb;
 
     public PlayerControls inputActions;
+
+
 
     private void Awake()
     {
@@ -60,6 +67,8 @@ public class PlayerMovement : MonoBehaviour
         inputActions.Enable();
         inputActions.Gameplay.Move.performed += OnMove;
         inputActions.Gameplay.Move.canceled += OnMove;
+        inputActions.Gameplay.Next.performed += OnNextPressed;
+        inputActions.Gameplay.Prev.performed += OnPrevPressed;
         inputActions.Gameplay.Flash.performed += OnFlash;
 
     }
@@ -68,27 +77,48 @@ public class PlayerMovement : MonoBehaviour
     {
         inputActions.Gameplay.Move.performed -= OnMove;
         inputActions.Gameplay.Move.canceled -= OnMove;
+        inputActions.Gameplay.Next.performed -= OnNextPressed;
+        inputActions.Gameplay.Prev.performed -= OnPrevPressed;
+
         inputActions.Gameplay.Flash.performed -= OnFlash;
         inputActions.Disable();
     }
 
-    // Move Script
+    // Switch Input
+    private void OnNextPressed(InputAction.CallbackContext context)
+    {
+       
+        CameraItem.SetActive(false);
+        AlarmItem.SetActive(true);
+        Debug.Log("Next item button was pressed");
+        
+    }
+
+    private void OnPrevPressed(InputAction.CallbackContext context)
+    {
+        
+        AlarmItem.SetActive(false);
+        CameraItem.SetActive(true);
+        Debug.Log("Prev item button was pressed");
+    }
+
+
+    // Move Input
     private void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
     }
 
-    // Camera Flash
+    // Camera Flash Input
     private void OnFlash(InputAction.CallbackContext context)
     {
-        // Check if flash can be triggered
+        // Checks flash trigger
         if (canFlash && !isFlashActive)
         {
-            // If yes, start the flash
-            flashCoroutine = StartCoroutine(FlashRoutine());
-
-            StaminaBar.instance.UseStamina(0.1f);
-            StaminaBar.instance.UseStamina(15);
+            if (StaminaBar.instance.UseStamina(15))
+            {
+                flashCoroutine = StartCoroutine(FlashRoutine());
+            }
 
         }
     }
@@ -129,22 +159,18 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator FlashCooldown()
     {
-        // Disable the flash during cooldown
         canFlash = false;
+        yield return new WaitForSeconds(cooldownTime); // Waiting....
 
-        // Wait for the cooldown period to end
-        yield return new WaitForSeconds(cooldownTime);
-
-        // if flash can be pressed again
         canFlash = true;
     }
 
     private void DetectEnemies()
     {
-        // changes the spehere collider infront of the player
+        // Puts sphere infront of player
         Vector3 sphereCenter = playerCamera.transform.position + playerCamera.transform.forward * flashRange;
 
-        // creates the sphere infront of the player
+        // creates the sphere
         Collider[] hitColliders = Physics.OverlapSphere(sphereCenter, flashRadius, enemyLayer);
 
         foreach (Collider hitCollider in hitColliders)
@@ -167,7 +193,7 @@ public class PlayerMovement : MonoBehaviour
         if (flash != null)
         {
             flash.SetActive(false);
-            flashLight = flash.GetComponent<Light>(); // Get the Light component
+            flashLight = flash.GetComponent<Light>();
             if (flashLight == null)
             {
                 Debug.LogError("No Light component found on the flashlight GameObject!");
@@ -192,6 +218,8 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer();
     }
 
+
+    // Movement 
     private void MovePlayer()
     {
         moveDirection = orientation.forward * moveInput.y + orientation.right * moveInput.x;
@@ -226,7 +254,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-
+    // Drawing invisible colliders
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;

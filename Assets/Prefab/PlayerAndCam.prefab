@@ -185,6 +185,7 @@ Transform:
   m_Children:
   - {fileID: 4415860934764194009}
   - {fileID: 6383548047827772107}
+  - {fileID: 464943754328830527}
   m_Father: {fileID: 5369893012768955283}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &82984625243300544
@@ -246,6 +247,8 @@ MonoBehaviour:
   fadeDuration: 1
   isFlashActive: 0
   cooldownTime: 3
+  CameraItem: {fileID: 0}
+  AlarmItem: {fileID: 0}
   rb: {fileID: 82984625243300544}
 --- !u!1 &1772775707975402914
 GameObject:
@@ -307,7 +310,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 464943754328830527}
   - {fileID: 8859226388249680138}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -337,13 +339,13 @@ Transform:
   m_GameObject: {fileID: 4363023543367671485}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1.17, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4524196978264093648}
   - {fileID: 4937545828455087357}
-  m_Father: {fileID: 5369893012768955283}
+  m_Father: {fileID: 8859226388249680138}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5531461624041525747
 MonoBehaviour:
