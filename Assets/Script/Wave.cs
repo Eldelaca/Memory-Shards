@@ -12,7 +12,7 @@ public class Wave : MonoBehaviour
 
     void Start()
     {
-        if (targetObject == null)  // Default to current GameObject if not set
+        if (targetObject == null) 
         {
             targetObject = gameObject;
         }
