@@ -125,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator FlashRoutine()
     {
-        // Activate Flash
+        // How it activates the Flash
         isFlashActive = true;
         flash.SetActive(true);
         flashLight.intensity = flashIntensity; 
@@ -149,11 +149,11 @@ public class PlayerMovement : MonoBehaviour
         
         flashLight.intensity = 0f;
 
-        // Deactivate after fadeaway
+        // Deactivates after fadeaway
         flash.SetActive(false);
         isFlashActive = false;
 
-        // coolsdown
+        // The flash cooldown
         StartCoroutine(FlashCooldown());
     }
 

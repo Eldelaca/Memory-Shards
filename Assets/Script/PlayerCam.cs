@@ -60,6 +60,7 @@ public class PlayerCam : MonoBehaviour
         xRotation += mouseY; 
 
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        yRotation = Mathf.Clamp(yRotation, -90f, 90f);
 
         Hand.localRotation = Quaternion.Euler(-xRotation, yRotation, 0);
 
