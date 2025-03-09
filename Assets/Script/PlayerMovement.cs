@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     // Enemy Detection Variables
     public LayerMask enemyLayer; 
     public float flashRange = 3f; 
-    public float flashRadius = 5f; 
+    public float flashRadius = 5f;
 
     // Flash Var
     public GameObject flash;
@@ -121,6 +121,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
         }
+
     }
 
     private IEnumerator FlashRoutine()
@@ -163,6 +164,12 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(cooldownTime); // Waiting....
 
         canFlash = true;
+    }
+
+    // This detects if the flash was pressed or not
+    public bool IsFlashPressed()
+    {
+        return inputActions.Gameplay.Flash.triggered; // Checks if the flash input has been pressed
     }
 
     private void DetectEnemies()
@@ -230,7 +237,7 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
     }
 
-    private void SpeedControl()
+     private void SpeedControl()
     {
         Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 

@@ -130,7 +130,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8859226388249680138}
-  - component: {fileID: 82984625243300544}
   - component: {fileID: 4946943770139144667}
   - component: {fileID: 3394155484569152132}
   - component: {fileID: 6574695176526376092}
@@ -157,33 +156,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6143950436978881917}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &82984625243300544
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1385516395590269047}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 0
-  m_CollisionDetection: 1
 --- !u!114 &4946943770139144667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,6 +183,7 @@ MonoBehaviour:
     m_Bits: 64
   flashRange: 5
   flashRadius: 3
+  playerWaypointPrefab: {fileID: 0}
   flash: {fileID: 1006207753172365338}
   flashIntensity: 50
   fadeDuration: 1
@@ -218,7 +191,7 @@ MonoBehaviour:
   cooldownTime: 3
   CameraItem: {fileID: 5750673866736707143}
   AlarmItem: {fileID: 8883204356834357271}
-  rb: {fileID: 82984625243300544}
+  rb: {fileID: 0}
 --- !u!114 &3394155484569152132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -468,7 +441,7 @@ Transform:
   m_GameObject: {fileID: 4392771959066285411}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.02, y: 1.96, z: -0.074}
+  m_LocalPosition: {x: 0.019999983, y: 1.96, z: -0.07400001}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1139,10 +1112,10 @@ PrefabInstance:
       addedObject: {fileID: 464943754328830527}
     - targetCorrespondingSourceObject: {fileID: 654101383170921714, guid: fab92be0a0d9b5f4fbbe9c32fba358ad, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8859226388249680138}
+      addedObject: {fileID: 4415860934764194009}
     - targetCorrespondingSourceObject: {fileID: 654101383170921714, guid: fab92be0a0d9b5f4fbbe9c32fba358ad, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4415860934764194009}
+      addedObject: {fileID: 8859226388249680138}
     - targetCorrespondingSourceObject: {fileID: 654101383170921714, guid: fab92be0a0d9b5f4fbbe9c32fba358ad, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6383548047827772107}
