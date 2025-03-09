@@ -7,64 +7,160 @@ public class EnemyAI : MonoBehaviour
     public Transform[] waypoints; // Array of waypoints
     private int currentWaypoint = 0; // Current waypoint index
 
-    // Timer variables for idle time after reaching a waypoint
-    private float idleTimer = 0f; // Timer to track the idle time
-    private bool isIdle = false; // Flag to track if the enemy is idling
+    private float idleTimer = 0f;
+    private bool isIdle = false;
 
-    public PlayerMovement playerMovement; // Reference to PlayerMovement script
-    public GameObject playerWaypointPrefab; // Prefab for the temporary waypoint
+    public PlayerMovement playerMovement; // Reference to player script
+    public GameObject playerWaypointPrefab; // Prefab for flash waypoint
+    private GameObject playerWaypoint = null; // Stores the active player waypoint
+
+    // Sight variables
+    public float fieldOfViewAngle = 90.0f;  // Field of View (degrees)
+
+    public Transform targetObject; // Target (player) reference
+    private bool isVisible = false;
 
     void Start()
     {
-        navAgent = GetComponent<NavMeshAgent>(); // Get the NavMeshAgent component
-        PatrolState(); // Start patrolling to the first waypoint
+        navAgent = GetComponent<NavMeshAgent>();
+        PatrolState();
     }
 
     void Update()
     {
-        if (isIdle)
+        // Check if player is within line of sight and visible
+        isPlayerVisible();
+
+        // Decision making based on perception
+        if (isVisible)
         {
-            IdleState();
+            SeekState(); // Seek player if visible
         }
         else
         {
-            PatrolState(); // Continue patrolling when not seeking or idling
+            if (playerWaypoint == null)
+            {
+                PatrolState(); // Patrol if not visible
+            }
+        }
+
+        // If the player flashes, create a waypoint
+        if (playerMovement.IsFlashPressed())
+        {
+            FlashWaypoint();
+        }
+
+        if (playerWaypoint != null)
+        {
+            SeekState();
         }
     }
 
-    // PatrolState: Moves between waypoints
     void PatrolState()
     {
-        // Check if there are waypoints
-        if (waypoints.Length == 0) return;
-
-        // Set the destination to the current waypoint
-        navAgent.SetDestination(waypoints[currentWaypoint].position);
-
-        // If the enemy has reached the current waypoint, start idling
-        if (!navAgent.pathPending && navAgent.remainingDistance < 0.5f)
+        if (waypoints.Length > 0)
         {
-            // Start idling with a random time between 2 and 5 seconds
-            isIdle = true;
-            idleTimer = Random.Range(2f, 5f); // Random idle time between 2 and 5 seconds
-            Debug.Log("Idling at waypoint " + currentWaypoint + " for " + idleTimer + " seconds");
+            navAgent.SetDestination(waypoints[currentWaypoint].position);
 
-            // Increment to the next waypoint after idle
-            currentWaypoint = (currentWaypoint + 1) % waypoints.Length;
+            // Pick a random waypoint
+            if (!navAgent.pathPending && navAgent.remainingDistance < 0.5f)
+            {
+                isIdle = true;
+                idleTimer = Random.Range(2f, 5f);
+                currentWaypoint = Random.Range(0, waypoints.Length);
+            }
         }
+
     }
 
-    // IdleState: Waits for the idle time before resuming patrol
     void IdleState()
     {
-        // Update the idle timer
         idleTimer -= Time.deltaTime;
-
-        // Once idle time is over, resume patrolling
         if (idleTimer <= 0f)
         {
-            isIdle = false; // Reset the idle state
-            Debug.Log("Resuming patrol");
+            isIdle = false;
         }
     }
+
+    void FlashWaypoint()
+    {
+        // Delete the old waypoint if it exists
+        if (playerWaypoint != null)
+        {
+            Destroy(playerWaypoint);
+        }
+
+        // Instantiate a new playerWaypoint at the player's position
+        playerWaypoint = Instantiate(playerWaypointPrefab, playerMovement.transform.position, Quaternion.identity);
+
+        // Immediately move to the new waypoint
+        SeekState();
+    }
+
+    void SeekState()
+    {
+        if (playerWaypoint != null)
+        {
+            navAgent.SetDestination(playerWaypoint.transform.position);
+        }
+
+        // Check if the enemy has reached the player waypoint
+        if (!navAgent.pathPending && navAgent.remainingDistance < 0.5f)
+        {
+            Destroy(playerWaypoint); // Remove the waypoint
+            playerWaypoint = null; // Clear reference
+        }
+    }
+
+    // Checks if Player is visible using Raycast (instead of range)
+    void isPlayerVisible()
+    {
+        Vector3 direction = targetObject.position - transform.position;
+
+        // Calculate angle between forward direction and direction to player
+        float angle = Vector3.Angle(direction, transform.forward);
+
+        // If player is within the field of view angle, check for obstacles
+        if (angle < fieldOfViewAngle * 0.5f)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, direction, out hit))
+            {
+                // If ray hits the player (targetObject), it means the player is visible
+                if (hit.transform == targetObject)
+                {
+                    isVisible = true;
+                    Debug.Log("Player is visible!");
+                }
+                else
+                {
+                    isVisible = false;
+                    Debug.Log("Player is not visible!");
+                }
+            }
+            else
+            {
+                isVisible = false;
+            } 
+        }
+        else
+        {
+            isVisible = false;
+            Debug.Log("Player is out of field of view");
+        }
+    }
+
+    // Commenting out isClose() and similar functions
+    // void isPlayerClose()
+    // {
+    //     // Optionally, check if player is within a certain proximity (e.g., 5 units)
+    //     if (Vector3.Distance(transform.position, targetObject.position) < 5.0f)
+    //     {
+    //         isClose = true;
+    //     }
+    //     else
+    //     {
+    //         isClose = false;
+    //     }
+    // }
 }

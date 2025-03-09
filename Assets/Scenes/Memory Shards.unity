@@ -5233,7 +5233,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5369893012768955283, guid: ce440b49a008b464ab7cf916f24d93a8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.8
+      value: 9.72
       objectReference: {fileID: 0}
     - target: {fileID: 5369893012768955283, guid: ce440b49a008b464ab7cf916f24d93a8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5241,7 +5241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5369893012768955283, guid: ce440b49a008b464ab7cf916f24d93a8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 43.5
+      value: 76.41
       objectReference: {fileID: 0}
     - target: {fileID: 5369893012768955283, guid: ce440b49a008b464ab7cf916f24d93a8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5467,7 +5467,9 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3693135241298730199, guid: ce440b49a008b464ab7cf916f24d93a8, type: 3}
+    - {fileID: 8544690564970536928, guid: ce440b49a008b464ab7cf916f24d93a8, type: 3}
     m_RemovedGameObjects:
     - {fileID: 1772775707975402914, guid: ce440b49a008b464ab7cf916f24d93a8, type: 3}
     m_AddedGameObjects:
@@ -5811,6 +5813,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!4 &1933024324 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6143950436978881917, guid: ce440b49a008b464ab7cf916f24d93a8, type: 3}
+  m_PrefabInstance: {fileID: 1688932568}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2009538434
 GameObject:
   m_ObjectHideFlags: 0
@@ -5826,7 +5833,7 @@ GameObject:
   - component: {fileID: 2009538442}
   - component: {fileID: 2009538441}
   m_Layer: 6
-  m_Name: Enemy (PlaceHolder)
+  m_Name: Enemy (EyeBall)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5884,7 +5891,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2009538434}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &2009538438
 Transform:
   m_ObjectHideFlags: 0
@@ -5947,6 +5954,8 @@ MonoBehaviour:
   - {fileID: 511013187}
   playerMovement: {fileID: 1868551533}
   playerWaypointPrefab: {fileID: 791666673607079451, guid: 55130d5f3e330b5479a7aaf4b9386641, type: 3}
+  fieldOfViewAngle: 90
+  targetObject: {fileID: 1933024324}
 --- !u!195 &2009538442
 NavMeshAgent:
   m_ObjectHideFlags: 0

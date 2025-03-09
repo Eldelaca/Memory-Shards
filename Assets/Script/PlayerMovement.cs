@@ -180,6 +180,7 @@ public class PlayerMovement : MonoBehaviour
         // creates the sphere
         Collider[] hitColliders = Physics.OverlapSphere(sphereCenter, flashRadius, enemyLayer);
 
+        /* 
         foreach (Collider hitCollider in hitColliders)
         {
             Enemy enemy = hitCollider.GetComponent<Enemy>();
@@ -188,6 +189,7 @@ public class PlayerMovement : MonoBehaviour
                 enemy.TakeFlashEffect();
             }
         }
+        */
     }
 
 
