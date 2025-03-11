@@ -753,7 +753,7 @@ GameObject:
   - component: {fileID: 366583008}
   - component: {fileID: 366583007}
   m_Layer: 0
-  m_Name: Wall (2)
+  m_Name: HallWalls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1147,7 +1147,7 @@ GameObject:
   m_Component:
   - component: {fileID: 435016535}
   m_Layer: 0
-  m_Name: House
+  m_Name: Building
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1167,13 +1167,13 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1538532175}
-  - {fileID: 1539519298}
   - {fileID: 1107086889}
   - {fileID: 820750351}
   - {fileID: 1363484788}
   - {fileID: 776898311}
   - {fileID: 1140187575}
   - {fileID: 272772765}
+  - {fileID: 488279585}
   m_Father: {fileID: 1163638778}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &435215146 stripped
@@ -1306,13 +1306,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 480762150}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.41, y: 6.08, z: 13.13}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -18.779999}
   m_LocalScale: {x: 4.2024994, y: 3.789819, z: 0.32584}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 885810498}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1979547158}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &480762156
 MonoBehaviour:
@@ -1358,7 +1358,8 @@ Transform:
   - {fileID: 366583006}
   - {fileID: 1579652906}
   - {fileID: 2113750956}
-  m_Father: {fileID: 1163638778}
+  - {fileID: 1539519298}
+  m_Father: {fileID: 435016535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &511013186
 GameObject:
@@ -3396,13 +3397,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1023512908}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.41, y: 6.08, z: 31.91}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4.2024994, y: 3.789819, z: 0.32584}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 212267681}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1979547158}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1059945598
 GameObject:
@@ -3986,7 +3987,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 435016535}
-  - {fileID: 488279585}
+  - {fileID: 1979547158}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1348404180
@@ -4030,7 +4031,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1363484788}
   m_Layer: 0
-  m_Name: DoorWall
+  m_Name: BuildingDoorWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4474,7 +4475,7 @@ GameObject:
   - component: {fileID: 1539519300}
   - component: {fileID: 1539519299}
   m_Layer: 3
-  m_Name: Floor (1)
+  m_Name: HallFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4489,11 +4490,11 @@ Transform:
   m_GameObject: {fileID: 1539519297}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.4304, y: 0.38, z: 22.862}
+  m_LocalPosition: {x: -9.0162, y: -5.3455997, z: -22.144398}
   m_LocalScale: {x: 0.5975982, y: 3.0703979, z: 2.0613472}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 435016535}
+  m_Father: {fileID: 488279585}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1539519299
 BoxCollider:
@@ -4635,7 +4636,7 @@ GameObject:
   - component: {fileID: 1579652908}
   - component: {fileID: 1579652907}
   m_Layer: 0
-  m_Name: Wall (3)
+  m_Name: HallWalls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5219,6 +5220,14 @@ PrefabInstance:
       propertyPath: rb
       value: 
       objectReference: {fileID: 435215146}
+    - target: {fileID: 4946943770139144667, guid: ce440b49a008b464ab7cf916f24d93a8, type: 3}
+      propertyPath: flashRange
+      value: 3.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4946943770139144667, guid: ce440b49a008b464ab7cf916f24d93a8, type: 3}
+      propertyPath: flashRadius
+      value: 2.9
+      objectReference: {fileID: 0}
     - target: {fileID: 4946943770139144667, guid: ce440b49a008b464ab7cf916f24d93a8, type: 3}
       propertyPath: playerWaypointPrefab
       value: 
@@ -5818,6 +5827,44 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6143950436978881917, guid: ce440b49a008b464ab7cf916f24d93a8, type: 3}
   m_PrefabInstance: {fileID: 1688932568}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1933024330 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 262227520282603271, guid: ce440b49a008b464ab7cf916f24d93a8, type: 3}
+  m_PrefabInstance: {fileID: 1688932568}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1979547157
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1979547158}
+  m_Layer: 0
+  m_Name: Doors
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1979547158
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979547157}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.41, y: 6.08, z: 31.91}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 480762155}
+  - {fileID: 1023512914}
+  m_Father: {fileID: 1163638778}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2009538434
 GameObject:
   m_ObjectHideFlags: 0
@@ -5952,10 +5999,15 @@ MonoBehaviour:
   - {fileID: 383322509}
   - {fileID: 32943769}
   - {fileID: 511013187}
+  targetObject: {fileID: 1933024324}
+  anim: {fileID: 1933024330}
   playerMovement: {fileID: 1868551533}
   playerWaypointPrefab: {fileID: 791666673607079451, guid: 55130d5f3e330b5479a7aaf4b9386641, type: 3}
-  fieldOfViewAngle: 90
-  targetObject: {fileID: 1933024324}
+  fieldOfViewAngle: 120
+  proximityRange: 15
+  isFleeing: 0
+  fleeTime: 15
+  fleeTimer: 0
 --- !u!195 &2009538442
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -6876,7 +6928,7 @@ GameObject:
   - component: {fileID: 2113750958}
   - component: {fileID: 2113750961}
   m_Layer: 0
-  m_Name: Wave (1)
+  m_Name: HallRoof
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7034,5 +7086,3 @@ SceneRoots:
   - {fileID: 2100280665}
   - {fileID: 906255469}
   - {fileID: 110863752}
-  - {fileID: 480762155}
-  - {fileID: 1023512914}

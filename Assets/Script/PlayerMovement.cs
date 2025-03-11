@@ -174,22 +174,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void DetectEnemies()
     {
-        // Puts sphere infront of player
+        // Puts sphere in front of player
         Vector3 sphereCenter = playerCamera.transform.position + playerCamera.transform.forward * flashRange;
 
-        // creates the sphere
+        // Creates the sphere
         Collider[] hitColliders = Physics.OverlapSphere(sphereCenter, flashRadius, enemyLayer);
 
-        /* 
+        // Detect and apply flash effect to enemies within range
         foreach (Collider hitCollider in hitColliders)
         {
-            Enemy enemy = hitCollider.GetComponent<Enemy>();
-            if (enemy != null)
+            EnemyAI enemyAI = hitCollider.GetComponent<EnemyAI>();
+            if (enemyAI != null)
             {
-                enemy.TakeFlashEffect();
+                enemyAI.TakeFlashEffect();
             }
         }
-        */
     }
 
 

@@ -3,82 +3,82 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
+    // Ref
     private NavMeshAgent navAgent;
-    public Transform[] waypoints; // Array of waypoints
-    private int currentWaypoint = 0; // Current waypoint index
+    public Transform[] waypoints; // List of Waypoints
+    private int currentWaypoint = 0;
+    public Transform targetObject; // Player Object
+    public Animator anim;
 
+    // Idle State Timer
     private float idleTimer = 0f;
     private bool isIdle = false;
 
-    public PlayerMovement playerMovement; // Reference to player script
-    public GameObject playerWaypointPrefab; // Prefab for flash waypoint
-    private GameObject playerWaypoint = null; // Stores the active player waypoint
+    public PlayerMovement playerMovement;
 
-    // Sight variables
-    public float fieldOfViewAngle = 90.0f;  // Field of View (degrees)
+    // Instantiate Waypoint Prefab 
+    public GameObject playerWaypointPrefab;
+    private GameObject playerWaypoint = null;
 
-    public Transform targetObject; // Target (player) reference
+    // Sight var
+    public float fieldOfViewAngle = 120.0f;  // Field of View (in degrees)
     private bool isVisible = false;
+
+    // Prox var
+    public float proximityRange = 15.0f;
+
+    // Flee state
+    public bool isFleeing = false;
+    public float fleeTime = 15f; // Time to flee
+    public float fleeTimer = 0f; // Timer to track fleeing duration
 
     void Start()
     {
-        navAgent = GetComponent<NavMeshAgent>();
-        PatrolState();
+        navAgent = GetComponent<NavMeshAgent>(); // Grabbing NavMesh Agent Component
+        PatrolState(); // Default State on Start
     }
 
     void Update()
     {
-        // Check if player is within line of sight and visible
-        isPlayerVisible();
-
-        // Decision making based on perception
-        if (isVisible)
+        // If the enemy is fleeing, handle flee state
+        if (isFleeing)
         {
-            SeekState(); // Seek player if visible
+            FleeState();
         }
         else
         {
-            if (playerWaypoint == null)
+            // Check List
+            isPlayerVisible(); // Visibility Function
+            isPlayerClose(); // Proxy Function
+
+            if (isVisible)
             {
-                PatrolState(); // Patrol if not visible
+                ChaseState();
+            }
+            else
+            {
+                if (playerWaypoint != null)
+                {
+                    SeekState(); // Move to last known position
+                }
+                else
+                {
+                    if (isIdle)
+                    {
+                        IdleState();
+                    }
+                    else
+                    {
+                        PatrolState(); // Resume Default State 
+                    }
+                }
             }
         }
 
-        // If the player flashes, create a waypoint
+        // Check the player's action
         if (playerMovement.IsFlashPressed())
         {
             FlashWaypoint();
-        }
-
-        if (playerWaypoint != null)
-        {
-            SeekState();
-        }
-    }
-
-    void PatrolState()
-    {
-        if (waypoints.Length > 0)
-        {
-            navAgent.SetDestination(waypoints[currentWaypoint].position);
-
-            // Pick a random waypoint
-            if (!navAgent.pathPending && navAgent.remainingDistance < 0.5f)
-            {
-                isIdle = true;
-                idleTimer = Random.Range(2f, 5f);
-                currentWaypoint = Random.Range(0, waypoints.Length);
-            }
-        }
-
-    }
-
-    void IdleState()
-    {
-        idleTimer -= Time.deltaTime;
-        if (idleTimer <= 0f)
-        {
-            isIdle = false;
         }
     }
 
@@ -92,11 +92,64 @@ public class EnemyAI : MonoBehaviour
 
         // Instantiate a new playerWaypoint at the player's position
         playerWaypoint = Instantiate(playerWaypointPrefab, playerMovement.transform.position, Quaternion.identity);
-
-        // Immediately move to the new waypoint
-        SeekState();
     }
 
+    public void TakeFlashEffect()
+    {
+        // Trigger Flee state
+        isFleeing = true;
+        fleeTimer = fleeTime; // Reset flee timer
+        Debug.Log("Enemy hit by flash, fleeing!");
+    }
+
+    // ***** States *****
+
+    // Chase State
+    void ChaseState()
+    {
+        if (playerWaypoint != null)
+        {
+            // Move towards the last known player position
+            navAgent.SetDestination(playerWaypoint.transform.position);
+            Destroy(playerWaypoint);
+            playerWaypoint = null;
+        }
+        else
+        {
+            // If the player waypoint doesn't exist, go to the player itself
+            navAgent.SetDestination(targetObject.transform.position);
+        }
+    }
+
+    // Patrol State (Default)
+    void PatrolState()
+    {
+        if (waypoints.Length > 0)
+        {
+            navAgent.SetDestination(waypoints[currentWaypoint].position);
+
+            // Pick a random waypoint
+            if (!navAgent.pathPending && navAgent.remainingDistance < 0.5f)
+            {
+                isIdle = true;
+                idleTimer = Random.Range(3f, 7f);
+                currentWaypoint = Random.Range(0, waypoints.Length);
+            }
+        }
+    }
+
+    // Idle State
+    void IdleState()
+    {
+        idleTimer -= Time.deltaTime;
+        if (idleTimer <= 0f)
+        {
+            isIdle = false;
+            PatrolState(); // Ensures the patrol starts after idling time ends
+        }
+    }
+
+    // Seek State
     void SeekState()
     {
         if (playerWaypoint != null)
@@ -112,55 +165,95 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    // Checks if Player is visible using Raycast (instead of range)
+    // Flee State
+    void FleeState()
+    {
+        fleeTimer -= Time.deltaTime; // Decrease timer
+
+        if (fleeTimer <= 0f)
+        {
+            isFleeing = false; // End flee state timer
+            PatrolState(); // Immediately return to patrolling instead of going to a waypoint
+        }
+        else
+        {
+            Vector3 fleeDirection = transform.position - targetObject.position; // Direction opposite of player
+            navAgent.SetDestination(transform.position + fleeDirection.normalized * 10f); // Flee away
+        }
+    }
+
+    // ***** Boolean Checks *****
+
+    // Checks if the player is within the Vision of the Enemy
     void isPlayerVisible()
     {
-        Vector3 direction = targetObject.position - transform.position;
-
-        // Calculate angle between forward direction and direction to player
-        float angle = Vector3.Angle(direction, transform.forward);
-
-        // If player is within the field of view angle, check for obstacles
-        if (angle < fieldOfViewAngle * 0.5f)
+        // If the enemy is fleeing, ignore visibility checks and ensure the enemy can't see the player
+        if (isFleeing)
         {
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, direction, out hit))
+            isVisible = false; // Ignore visibility when fleeing
+        }
+        else
+        {
+            Vector3 direction = targetObject.position - transform.position;
+
+            float angle = Vector3.Angle(direction, transform.forward);
+
+            // Using a Raycast to figure out if player is in line of sight (POV)
+            if (angle < fieldOfViewAngle * 0.5f)
             {
-                // If ray hits the player (targetObject), it means the player is visible
-                if (hit.transform == targetObject)
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, direction, out hit))
                 {
-                    isVisible = true;
-                    Debug.Log("Player is visible!");
+                    // If ray hits the player (targetObject), it means the player is visible
+                    if (hit.transform == targetObject)
+                    {
+                        isVisible = true;
+                        Debug.Log("Player is visible!");
+                    }
+                    else
+                    {
+                        isVisible = false;
+                        Debug.Log("Player is not visible!");
+                    }
                 }
                 else
                 {
                     isVisible = false;
-                    Debug.Log("Player is not visible!");
                 }
             }
             else
             {
                 isVisible = false;
-            } 
-        }
-        else
-        {
-            isVisible = false;
-            Debug.Log("Player is out of field of view");
+                Debug.Log("Player is out of field of view");
+            }
         }
     }
 
-    // Commenting out isClose() and similar functions
-    // void isPlayerClose()
-    // {
-    //     // Optionally, check if player is within a certain proximity (e.g., 5 units)
-    //     if (Vector3.Distance(transform.position, targetObject.position) < 5.0f)
-    //     {
-    //         isClose = true;
-    //     }
-    //     else
-    //     {
-    //         isClose = false;
-    //     }
-    // }
+    // Checks the Proximity of Player and Enemy (Distance)
+    void isPlayerClose()
+    {
+        float distance = Vector3.Distance(transform.position, targetObject.position);
+
+        if (distance < 15.0f)
+        {
+            // IF player is running and not crouching
+            if (anim.GetBool("runBool") && !anim.GetBool("crouchBool"))
+            {
+                ChaseState();
+            }
+            // IF the player is crouching
+            else if (anim.GetBool("crouchBool"))
+            {
+                Debug.Log("Player is crouching, waypoint will not be created.");
+            }
+            else
+            {
+                Debug.Log("Player is close, but not running or crouching.");
+            }
+        }
+        else
+        {
+            Debug.Log("Player is out of range.");
+        }
+    }
 }
