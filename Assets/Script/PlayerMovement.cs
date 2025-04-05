@@ -114,12 +114,12 @@ public class PlayerMovement : MonoBehaviour
     {
         // Checks flash trigger
         if (canFlash && !isFlashActive)
-        {
+        {/*
             if (StaminaBar.instance.UseStamina(15))
             {
                 flashCoroutine = StartCoroutine(FlashRoutine());
             }
-
+            */
         }
 
     }

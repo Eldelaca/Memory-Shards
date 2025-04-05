@@ -1,78 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StaminaBar : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public Slider staminaBar;
-
-    // Flash Stamina
-    public PlayerMovement playerMovement;
-
-    private float maxStamina = 100f;
-    private float currentStamina;
-
-    private WaitForSeconds regenTick = new WaitForSeconds(0.1f);
-    private Coroutine regen;
-
-    public static StaminaBar instance;
-
-    private void Awake()
-    {
-        instance = this;
-    }
+    public Slider staminaSlider;
+    public GameData gameData; // Ref to the GameData
 
     void Start()
     {
-        currentStamina = maxStamina;
-        staminaBar.maxValue = maxStamina;
-        staminaBar.value = maxStamina;   
+        staminaSlider.maxValue = gameData.maxStamina;
+        staminaSlider.value = gameData.stamina;
     }
 
-    public float GetCurrentStamina()
+    void Update()
     {
-        return currentStamina;
+        staminaSlider.value = gameData.stamina; // Updates stamina value from GameData
     }
 
-    public bool UseStamina(float amount)
+    // Method to decrease stamina
+    public void UseStamina(float amount)
     {
-        if(currentStamina - amount >= 0)
+        if (gameData.stamina - amount >= 0)
         {
-            currentStamina -= amount;
-            staminaBar.value = currentStamina;
-            return true;
-
-            /*
-            if(regen != null)
-                StopCoroutine(regen);
-
-
-            regen = StartCoroutine(RegenStamina());
-            */
+            gameData.stamina -= amount;
         }
-        else
-        {
-            return false;
-            Debug.Log("Not enough stamina");
-        }
-
     }
 
-    /*
-    private IEnumerator RegenStamina()
+    // Method to regenerate stamina
+    public void RegenerateStamina(float amount)
     {
-        yield return new WaitForSeconds(2);
-
-        while(currentStamina < maxStamina)
+        if (gameData.stamina + amount <= gameData.maxStamina)
         {
-            currentStamina += maxStamina / 100f;
-            staminaBar.value = currentStamina;
-            yield return regenTick;
+            gameData.stamina += amount;
         }
-        regen = null;
     }
-    */
-
 }
