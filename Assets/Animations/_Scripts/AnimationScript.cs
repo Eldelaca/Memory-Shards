@@ -29,12 +29,10 @@ public class AnimationScript : MonoBehaviour {
 		if (Input.GetKey (KeyCode.LeftShift) && Input.GetKey (KeyCode.W)) {
 			// Set runBool to true if pressed
 			animator.SetBool ("runBool", true);
-			Debug.Log ("Run");
 	
 		} else {
 			// Set runBool to false if not pressed
 			animator.SetBool ("runBool", false);
-			Debug.Log ("No Run");
 		}
 
 		if (Input.GetKey(KeyCode.C))

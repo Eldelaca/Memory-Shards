@@ -208,12 +208,10 @@ public class EnemyAI : MonoBehaviour
                     if (hit.transform == targetObject)
                     {
                         isVisible = true;
-                        Debug.Log("Player is visible!");
                     }
                     else
                     {
                         isVisible = false;
-                        Debug.Log("Player is not visible!");
                     }
                 }
                 else
@@ -224,7 +222,7 @@ public class EnemyAI : MonoBehaviour
             else
             {
                 isVisible = false;
-                Debug.Log("Player is out of field of view");
+                
             }
         }
     }
@@ -241,19 +239,7 @@ public class EnemyAI : MonoBehaviour
             {
                 ChaseState();
             }
-            // IF the player is crouching
-            else if (anim.GetBool("crouchBool"))
-            {
-                Debug.Log("Player is crouching, waypoint will not be created.");
-            }
-            else
-            {
-                Debug.Log("Player is close, but not running or crouching.");
-            }
-        }
-        else
-        {
-            Debug.Log("Player is out of range.");
+             
         }
     }
 }
