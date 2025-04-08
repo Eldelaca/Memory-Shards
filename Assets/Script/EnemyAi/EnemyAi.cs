@@ -101,7 +101,7 @@ public class EnemyAI : MonoBehaviour
     {
         // Trigger Flee state
         isFleeing = true;
-        enemyData.fleeTimer = enemyData.fleeTime; // Reset flee timer
+        fleeTimer = enemyData.fleeTime; // Reset flee timer
         Debug.Log("Enemy hit by flash, fleeing!");
     }
 
@@ -171,9 +171,9 @@ public class EnemyAI : MonoBehaviour
     // Flee State
     void FleeState()
     {
-        enemyData.fleeTimer -= Time.deltaTime; // Decrease timer
+        fleeTimer -= Time.deltaTime; // Decrease timer
 
-        if (enemyData.fleeTimer <= 0f)
+        if (fleeTimer <= 0f)
         {
             isFleeing = false; // End flee state timer
             PatrolState(); // Immediately return to patrolling instead of going to a waypoint

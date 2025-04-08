@@ -9,7 +9,6 @@ public class EnemyData : ScriptableObject
     public int health;
     public float vision;
     public float fleeTime;
-    public float fleeTimer;
 
 }
 
