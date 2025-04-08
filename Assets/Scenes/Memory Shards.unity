@@ -774,13 +774,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 467071658}
-        m_TargetAssemblyTypeName: PlayerSaveSystem, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 1949675344}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: SavePosition
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1442,11 +1442,6 @@ Transform:
   - {fileID: 488279585}
   m_Father: {fileID: 1163638778}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &467071658 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4763797376702500955, guid: 2e33ebcd8ec927d469fcf95b1d60dcd0, type: 3}
-  m_PrefabInstance: {fileID: 3096358135126095708}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &480762150
 GameObject:
   m_ObjectHideFlags: 0
@@ -4056,11 +4051,6 @@ Transform:
   - {fileID: 1979547158}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1182598064 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6808694428798455182, guid: ed32c1974155c734abf6e1f92c5e4cad, type: 3}
-  m_PrefabInstance: {fileID: 4359223987786436811}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1315114498
 GameObject:
   m_ObjectHideFlags: 0
@@ -4500,13 +4490,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerSaveSystem, Assembly-CSharp
+      - m_Target: {fileID: 1949675344}
+        m_TargetAssemblyTypeName: PlayerSaveManager, Assembly-CSharp
         m_MethodName: LoadPosition
-        m_Mode: 2
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 1933024324}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5725,29 +5715,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1549568732086458871, guid: 2e33ebcd8ec927d469fcf95b1d60dcd0, type: 3}
   m_PrefabInstance: {fileID: 3096358135126095708}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 467071658}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f49302451ed1524e87f2a7212febc64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1868551545
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 467071658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 182f2518878b7a24f8abb079622c95fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveButton: {fileID: 0}
-  loadButton: {fileID: 0}
-  saveSystem: {fileID: 0}
-  playerTransform: {fileID: 1933024324}
-  enemyTransform: {fileID: 1182598064}
 --- !u!4 &1933024324 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 316815434493074769, guid: 2e33ebcd8ec927d469fcf95b1d60dcd0, type: 3}
@@ -5768,6 +5741,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1949675342}
   - component: {fileID: 1949675341}
+  - component: {fileID: 1949675344}
   - component: {fileID: 1949675343}
   m_Layer: 0
   m_Name: SaveLoadManager
@@ -5821,9 +5795,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1949675340}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e740635cb2b394145afe286bde633ed5, type: 3}
+  m_Script: {fileID: 11500000, guid: 66d6feae4d668414396b1aa2134beb8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1949675344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949675340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 182f2518878b7a24f8abb079622c95fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveSystem: {fileID: 1949675343}
+  playerTransform: {fileID: 1933024324}
+  enemyTransform: {fileID: 2009538435}
 --- !u!1 &1979547157
 GameObject:
   m_ObjectHideFlags: 0
@@ -5860,6 +5849,11 @@ Transform:
 --- !u!1 &2009538434 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7166908734000782015, guid: ed32c1974155c734abf6e1f92c5e4cad, type: 3}
+  m_PrefabInstance: {fileID: 4359223987786436811}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2009538435 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4591223019461242247, guid: ed32c1974155c734abf6e1f92c5e4cad, type: 3}
   m_PrefabInstance: {fileID: 4359223987786436811}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2014626588
@@ -6964,10 +6958,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4763797376702500955, guid: 2e33ebcd8ec927d469fcf95b1d60dcd0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1868551545}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e33ebcd8ec927d469fcf95b1d60dcd0, type: 3}
 --- !u!1001 &4359223987786436811
 PrefabInstance:
