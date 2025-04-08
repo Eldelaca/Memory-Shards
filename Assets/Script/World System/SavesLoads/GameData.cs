@@ -17,9 +17,14 @@ public class GameData
 
     public GameData()
     {
-        this.playerPosX = 0f;
+        this.playerPosX = -10.3f;
         this.playerPosY = 0f;
-        this.playerPosZ = 0f;
-        this.currentStamina = 1000f;
+        this.playerPosZ = -49.8f;
+        
+        this.enemyPosX = 0f;
+        this.enemyPosY = 0f;
+        this.enemyPosZ = 0f;
+        
+        this.currentStamina = 100f;
     }
 }

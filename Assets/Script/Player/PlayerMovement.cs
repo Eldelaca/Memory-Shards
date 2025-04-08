@@ -8,13 +8,14 @@ using System.Collections;
 /// 
 /// </summary>
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IDataPesistence
 {
     // Speed Variables
     public float moveSpeed;
     public float groundDrag;
     public float airMultiplier;
 
+    public GameObject player;
     // Bool checks for isGrounded checks
     public float playerHeight;
     public LayerMask whatIsGround;
@@ -269,26 +270,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-
-    public void SaveData(ref GameData data)
-    {
-        data.playerPosX = transform.position.x;
-        data.playerPosY = transform.position.y;
-        data.playerPosZ = transform.position.z;
-        Debug.Log($"{gameObject.name} saving position to saved data."); 
-
-    }
-
-    public void LoadData(GameData data)
-    {
-        transform.position = new Vector3(data.playerPosX, data.playerPosY, data.playerPosZ);
-        Debug.Log($"{gameObject.name} loading position from saved data.");
-    }
-
-
-
-
-
     // Drawing invisible colliders
     private void OnDrawGizmos()
     {
@@ -297,4 +278,22 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawWireSphere(sphereCenter, flashRadius);
     }
 
+    public void SaveData(ref GameData data)
+    {
+        
+        data.playerPosX = transform.position.x;
+        data.playerPosY = transform.position.y;
+        data.playerPosZ = transform.position.z;
+        Debug.Log($"{gameObject.name} saving position to saved data.");
+        
+    }   
+
+    public void LoadData(GameData data)
+    {
+         player.transform.position = new Vector3(data.playerPosX, data.playerPosY, data.playerPosZ);
+         
+        Debug.Log($"{gameObject.name} loading position from saved data.");
+
+    }
+    
 }

@@ -785,7 +785,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
 --- !u!114 &221116384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -858,6 +858,11 @@ Transform:
   - {fileID: 821282445}
   m_Father: {fileID: 272772765}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &249853492 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1093914396647901163, guid: 2e33ebcd8ec927d469fcf95b1d60dcd0, type: 3}
+  m_PrefabInstance: {fileID: 3096358135126095708}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &272772764
 GameObject:
   m_ObjectHideFlags: 0
@@ -4501,7 +4506,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
 --- !u!114 &1471742234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6895,6 +6900,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 316815434493074769, guid: 2e33ebcd8ec927d469fcf95b1d60dcd0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 316815434493074769, guid: 2e33ebcd8ec927d469fcf95b1d60dcd0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 316815434493074769, guid: 2e33ebcd8ec927d469fcf95b1d60dcd0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -48.3
+      objectReference: {fileID: 0}
     - target: {fileID: 727399263096358064, guid: 2e33ebcd8ec927d469fcf95b1d60dcd0, type: 3}
       propertyPath: enemy
       value: 
@@ -6903,6 +6920,10 @@ PrefabInstance:
       propertyPath: pauseMenuUI
       value: 
       objectReference: {fileID: 138088696}
+    - target: {fileID: 1549568732086458871, guid: 2e33ebcd8ec927d469fcf95b1d60dcd0, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 249853492}
     - target: {fileID: 1991592234488394687, guid: 2e33ebcd8ec927d469fcf95b1d60dcd0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.08
@@ -6976,6 +6997,10 @@ PrefabInstance:
       propertyPath: anim
       value: 
       objectReference: {fileID: 1933024330}
+    - target: {fileID: 4516907509134582051, guid: ed32c1974155c734abf6e1f92c5e4cad, type: 3}
+      propertyPath: enemyData
+      value: 
+      objectReference: {fileID: 11400000, guid: b350475cde9172f4a8204b05f0daa221, type: 2}
     - target: {fileID: 4516907509134582051, guid: ed32c1974155c734abf6e1f92c5e4cad, type: 3}
       propertyPath: targetObject
       value: 
