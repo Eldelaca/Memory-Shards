@@ -222,7 +222,7 @@ public class EnemyAI : MonoBehaviour
             else
             {
                 isVisible = false;
-                
+
             }
         }
     }
@@ -239,7 +239,24 @@ public class EnemyAI : MonoBehaviour
             {
                 ChaseState();
             }
-             
+
         }
     }
+
+    public void SaveData(ref GameData data)
+    {
+        data.enemyPosX = transform.position.x;
+        data.enemyPosY = transform.position.y;
+        data.enemyPosZ = transform.position.z;
+        Debug.Log($"{gameObject.name} saving position to saved data.");
+    }   
+
+    public void LoadData(GameData data)
+    {
+        transform.position = new Vector3(data.enemyPosX, data.enemyPosY, data.enemyPosZ);
+        Debug.Log($"{gameObject.name} loading position from saved data.");
+
+    }
+
+   
 }

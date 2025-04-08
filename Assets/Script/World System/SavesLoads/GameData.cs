@@ -3,14 +3,23 @@ using UnityEngine;
 [System.Serializable]
 public class GameData
 {
-    public Vector3 playerPosition;
+    public float playerPosX;
+    public float playerPosY;
+    public float playerPosZ;
+
+
+
+    public float enemyPosX;
+    public float enemyPosY;
+    public float enemyPosZ;
     public float currentStamina;
-    public Vector3 enemyPosition;
+    
 
     public GameData()
     {
-        this.playerPosition = Vector3.zero;
-        this.enemyPosition = Vector3.zero;
-        this.currentStamina = 100f;
+        this.playerPosX = 0f;
+        this.playerPosY = 0f;
+        this.playerPosZ = 0f;
+        this.currentStamina = 1000f;
     }
 }

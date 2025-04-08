@@ -217,7 +217,6 @@ public class PlayerMovement : MonoBehaviour
 
         SpeedControl();
 
-        
 
         // Handles drag
         rb.linearDamping = grounded ? groundDrag : 0;
@@ -268,6 +267,26 @@ public class PlayerMovement : MonoBehaviour
 
         return moveDir.normalized; 
     }
+
+
+
+    public void SaveData(ref GameData data)
+    {
+        data.playerPosX = transform.position.x;
+        data.playerPosY = transform.position.y;
+        data.playerPosZ = transform.position.z;
+        Debug.Log($"{gameObject.name} saving position to saved data."); 
+
+    }
+
+    public void LoadData(GameData data)
+    {
+        transform.position = new Vector3(data.playerPosX, data.playerPosY, data.playerPosZ);
+        Debug.Log($"{gameObject.name} loading position from saved data.");
+    }
+
+
+
 
 
     // Drawing invisible colliders

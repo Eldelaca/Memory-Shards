@@ -13,10 +13,10 @@ public class SaveLoadManager : MonoBehaviour
     [SerializeField] private string fileName = "savefile.json"; // Where we will save the data to
     private string saveFilePath ;
 
-    private GameData gameData; 
+    public GameData gameData; 
     public static SaveLoadManager instance { get; private set; }
     private List<IDataPesistence> dataPersistenceObjects; // List to grab all the scripts from other projects
-    private FileDataHandler dataHandler;
+    
 
     
     
