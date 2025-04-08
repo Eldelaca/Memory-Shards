@@ -9,7 +9,9 @@ public class EnemyAI : MonoBehaviour
     private int currentWaypoint = 0;
     public Transform targetObject; // Player Object
     public Animator anim;
-
+    public EnemyData enemyData;
+    
+    
     // Idle State Timer
     private float idleTimer = 0f;
     private bool isIdle = false;
@@ -54,6 +56,7 @@ public class EnemyAI : MonoBehaviour
             if (isVisible)
             {
                 ChaseState();
+                
             }
             else
             {
@@ -98,7 +101,7 @@ public class EnemyAI : MonoBehaviour
     {
         // Trigger Flee state
         isFleeing = true;
-        fleeTimer = fleeTime; // Reset flee timer
+        enemyData.fleeTimer = enemyData.fleeTime; // Reset flee timer
         Debug.Log("Enemy hit by flash, fleeing!");
     }
 
@@ -168,9 +171,9 @@ public class EnemyAI : MonoBehaviour
     // Flee State
     void FleeState()
     {
-        fleeTimer -= Time.deltaTime; // Decrease timer
+        enemyData.fleeTimer -= Time.deltaTime; // Decrease timer
 
-        if (fleeTimer <= 0f)
+        if (enemyData.fleeTimer <= 0f)
         {
             isFleeing = false; // End flee state timer
             PatrolState(); // Immediately return to patrolling instead of going to a waypoint
@@ -199,7 +202,7 @@ public class EnemyAI : MonoBehaviour
             float angle = Vector3.Angle(direction, transform.forward);
 
             // Using a Raycast to figure out if player is in line of sight (POV)
-            if (angle < fieldOfViewAngle * 0.5f)
+            if (angle < enemyData.vision * 0.5f)
             {
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, direction, out hit))
