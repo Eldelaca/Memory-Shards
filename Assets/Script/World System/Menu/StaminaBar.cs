@@ -1,7 +1,8 @@
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 
-public class StaminaBar : MonoBehaviour
+
+public class StaminaBar : MonoBehaviour, IDataPesistence
 {
     public static StaminaBar instance; 
     public Slider staminaSlider; 
@@ -38,6 +39,7 @@ public class StaminaBar : MonoBehaviour
         if (staminaSlider != null)
         {
             staminaSlider.value = currentStamina / maxStamina;
+            Debug.Log("Current Stamina: " + currentStamina);
         }
     }
 
@@ -64,6 +66,20 @@ public class StaminaBar : MonoBehaviour
     public float GetCurrentStamina()
     {
         return currentStamina;
+    }
+
+    // This method loads the data 
+    // Ensures it reads the IData Persistence Script which passes data across scripts
+    // Loads the data from other scripts onto here
+    public void LoadData(GameData data)
+    {
+        this.currentStamina = data.currentStamina;
+    }
+
+    // Ensures the data from this script is passed onto other scripts (SaveLoadManager)
+    public void SaveData(ref GameData data)
+    {
+        data.currentStamina = this.currentStamina;
     }
 
 }

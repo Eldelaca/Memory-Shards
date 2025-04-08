@@ -9,9 +9,9 @@ public class MainMenu : MonoBehaviour
     // Start a new game
     public void StartNewGame()
     {
+        // Ensures on Click creates a new game
         // Set initial values for a new game
-        SaveLoadManager.instance.gameData.playerPosition = Vector3.zero;  // Start at the origin or a specific spawn point
-        SaveLoadManager.instance.SaveGame();
+        SaveLoadManager.instance.NewGame();
 
         // Load the main game scene
         SceneManager.LoadScene("Memory Shards");
@@ -20,20 +20,16 @@ public class MainMenu : MonoBehaviour
     // Continue from the saved game
     public void ContinueGame()
     {
+        // Ensures on Click creates loaded data 
         SaveLoadManager.instance.LoadGame();
-        // Ensure the player position is loaded correctly
-        PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
-        if (playerMovement != null && SaveLoadManager.instance.gameData.playerPosition != null)
-        {
-            playerMovement.transform.position = SaveLoadManager.instance.gameData.playerPosition;
-        }
-
+        
         SceneManager.LoadScene("Memory Shards");
     }
 
     // Quits the game
     public void QuitGame()
     {
+        // On Click creates Quits
         print("Exit Game");
         Application.Quit(); // ONLY WORKS WHEN GAME IS BUILT
 

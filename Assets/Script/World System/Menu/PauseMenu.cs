@@ -65,7 +65,7 @@ public class PauseMenu : MonoBehaviour
     {
         SaveLoadManager.instance.LoadGame(); // Load the game data
 
-        // Check if loaded data is valid
+        /* Check if loaded data is valid
         if (SaveLoadManager.instance.gameData != null)
         {
             // Make sure the player position is updated to the loaded position
@@ -76,6 +76,7 @@ public class PauseMenu : MonoBehaviour
         {
             Debug.LogWarning("Game data is null. Cannot load game.");
         }
+        */
     }
 
 }

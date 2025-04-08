@@ -195,10 +195,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        if (SaveLoadManager.instance != null && SaveLoadManager.instance.gameData != null)
-        {
-            transform.position = SaveLoadManager.instance.gameData.playerPosition;
-        }
+        
 
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -235,7 +232,6 @@ public class PlayerMovement : MonoBehaviour
     public void SavePlayerPosition()
     {
         // Save the current position of the player
-        SaveLoadManager.instance.gameData.playerPosition = transform.position;
         SaveLoadManager.instance.SaveGame();
     }
 
