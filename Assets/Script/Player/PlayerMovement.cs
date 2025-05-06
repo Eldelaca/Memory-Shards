@@ -225,10 +225,10 @@ public class PlayerMovement : MonoBehaviour, IDataPesistence
 
     private void SetDissolve(GameObject obj, float amount)
     {
-        foreach (var r in obj.GetComponentsInChildren<Renderer>())
+        foreach (var i in obj.GetComponentsInChildren<Renderer>())
         {
             
-            r.material.SetFloat(dissolveProperty, amount);
+            i.material.SetFloat(dissolveProperty, amount);
         }
     }
 
