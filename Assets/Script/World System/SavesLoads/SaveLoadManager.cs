@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 using System.Linq;
 using System.Collections.Generic;
 using System;
-using UnityEditor.Overlays;
 
 public class SaveLoadManager : MonoBehaviour
 {
@@ -40,6 +39,7 @@ public class SaveLoadManager : MonoBehaviour
         Debug.Log($"Save file path is: {saveFilePath}");
     }
 
+    [Obsolete]
     private void Start()
     {
 
@@ -52,6 +52,7 @@ public class SaveLoadManager : MonoBehaviour
     public void NewGame()
     {
         this.gameData = new GameData();
+        this.gameData.currentStamina = 100f;
     }
 
     // Save game data to a JSON file
@@ -75,46 +76,14 @@ public class SaveLoadManager : MonoBehaviour
         Debug.Log("Game Saved! at" + saveFilePath);
         
 
-        /*
-        SaveData data = new SaveData();
-        string json = JsonUtility.ToJson(data, true);
-
-        try
-        {
-            // Make sure directory exists
-            string folderPath = Application.persistentDataPath;
-            if (!Directory.Exists(folderPath))
-                Directory.CreateDirectory(folderPath);
-
-            File.WriteAllText(saveFilePath, json);
-
-            Debug.Log("Game saved to: " + saveFilePath);
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("Failed to save game: " + e.Message);
-        }
-        */
-
-
     }
 
     // Load game data from the JSON file and apply it to the scene
     public void LoadGame()
     {
-        /*        // Loads any saved data from a file using the data handler
-                this.gameData = dataHandler.Load();
-
-
-                // This must load any save data from any file using the data handler
-                // If no data is loaded, initialize to a new game
-                if (this.gameData == null)
-                {
-                    Debug.Log("No data was found. Creating data to default values");
-                    NewGame();
-                }
-        */
-        // To Do - Create push of data to read a script
+        // Loads any saved data from a file using the data handler
+        // To Do - Create push of data to read a script     
+        
 
 
 
@@ -153,13 +122,20 @@ public class SaveLoadManager : MonoBehaviour
             Debug.LogWarning("No save file to delete.");
         }
     }
-    
+
 
     private void OnApplicationQuit()
     {
-        SaveGame();
+#if UNITY_EDITOR
+        // In the Unity Editor, delete save file when exiting play mode
+        DeleteSave();
+#else
+    // When Building, this will be the code otherwise code ontop
+    SaveGame();
+#endif
     }
 
+ 
     private List<IDataPesistence> FindAllDataPersistenceObjects()
     {
 

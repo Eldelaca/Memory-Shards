@@ -12,7 +12,7 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Move",
@@ -153,6 +153,17 @@
                     "name": "",
                     "id": "7414ee8f-adb9-47d7-b14d-2ba3ff7f10a6",
                     "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard;Mouse",
+                    "action": "Flash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "da7e2058-4a8a-4cf3-8018-1c81ba186e99",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

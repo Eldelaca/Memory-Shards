@@ -1,16 +1,20 @@
 using UnityEngine;
 using System.Collections;
+
+/// <summary>
+/// Using Vertices to create a cube
+/// 
+/// </summary>
 public class MeshCreation : MonoBehaviour
 {
-    // Set up width and height variables
-    // These are required to define our vertices
+    
     public float meshWidth = 10f;
     public float meshHeight = 10f;
     public float meshDepth = 10f;
-    // Use this for initialisation
+   
     void Start()
     {
-        // Create mesh filter using GetComponent<meshfilter>
+        
         MeshFilter mf = GetComponent<MeshFilter>();
         Mesh mesh = new Mesh();
         mf.mesh = mesh;

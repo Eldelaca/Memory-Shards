@@ -2,14 +2,15 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-    public GameObject pauseMenuUI;  // Reference to the pause menu UI
-    public PlayerMovement playerMovement; // Reference to the player movement script
+    public GameObject pauseMenuUI;  
+    public PlayerMovement playerMovement; 
 
-    private bool isPaused = false; // Track if the game is paused or not
+    private bool isPaused = false; 
 
     private void Start()
     {
-        pauseMenuUI.SetActive(false); // Initially, the pause menu is not active
+        // Set Pause to off on start
+        pauseMenuUI.SetActive(false); 
     }
 
     private void Update()
@@ -28,42 +29,42 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    // Show the pause menu and pause the game
+    // Show Pause
     public void PauseGame()
     {
-        pauseMenuUI.SetActive(true); // Activate the pause menu UI
+        pauseMenuUI.SetActive(true); 
         
-        isPaused = true; // Set the pause state to true
+        isPaused = true; 
 
-        // Make the cursor visible and allow it to be used
+        // Show Cursors
         Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None; // Unlock the cursor so it can move freely
+        Cursor.lockState = CursorLockMode.None; 
     }
 
-    // Hide the pause menu and resume the game
+    // Resume Game
     public void ResumeGame()
     {
-        pauseMenuUI.SetActive(false); // Deactivate the pause menu UI
-        Time.timeScale = 1f; // Resume the game
-        isPaused = false; // Set the pause state to false
+        pauseMenuUI.SetActive(false); 
+        Time.timeScale = 1f; 
+        isPaused = false; 
 
-        // Hide the cursor and lock it back to the center of the screen
+        
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center
+        Cursor.lockState = CursorLockMode.Locked; 
     }
 
-    // Save the game when the Save button is pressed
+    // Save Method
     public void SaveGame()
     {
-        playerMovement.SavePlayerPosition(); // Save the player position
-        SaveLoadManager.instance.SaveGame(); // Save the game data
+        playerMovement.SavePlayerPosition(); 
+        SaveLoadManager.instance.SaveGame(); 
         Debug.Log("Game Saved!");
     }
 
-    // Load the game when the Load button is pressed
+    // Load Mehtod
     public void LoadGame()
     {
-        SaveLoadManager.instance.LoadGame(); // Load the game data
+        SaveLoadManager.instance.LoadGame(); 
 
         /* Check if loaded data is valid
         if (SaveLoadManager.instance.gameData != null)

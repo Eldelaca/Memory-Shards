@@ -8,7 +8,7 @@ using System.Collections;
 /// 
 /// </summary>
 
-public class PlayerMovement : MonoBehaviour, IDataPesistence
+public class PlayerMovement : MonoBehaviour
 {
     #region Variables
 
@@ -136,13 +136,12 @@ public class PlayerMovement : MonoBehaviour, IDataPesistence
     {
         // Checks flash trigger
         if (canFlash && !isFlashActive)
-        {
             if (StaminaBar.instance != null && StaminaBar.instance.UseStamina(15f))
             {
                 flashCoroutine = StartCoroutine(FlashRoutine());
             }
             
-        }
+        
 
     }
 
@@ -345,26 +344,6 @@ public class PlayerMovement : MonoBehaviour, IDataPesistence
         Gizmos.color = Color.blue;
         Vector3 sphereCenter = Camera.main.transform.position + Camera.main.transform.forward * flashRange;
         Gizmos.DrawWireSphere(sphereCenter, flashRadius);
-    }
-    #endregion
-
-    #region Data Saving
-    public void SaveData(ref GameData data)
-    {
-        
-        data.playerPosX = transform.position.x;
-        data.playerPosY = transform.position.y;
-        data.playerPosZ = transform.position.z;
-        Debug.Log($"{gameObject.name} saving position to saved data.");
-        
-    }   
-
-    public void LoadData(GameData data)
-    {
-         player.transform.position = new Vector3(data.playerPosX, data.playerPosY, data.playerPosZ);
-         
-        Debug.Log($"{gameObject.name} loading position from saved data.");
-
     }
     #endregion
 }

@@ -1,7 +1,13 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour, IDataPesistence
+/// <summary>
+/// In this code, the enemy ai has 4 different states which are
+/// Flee, Patrol, Chase, Idle
+/// Goes through a list of waypoints to move around the map
+/// </summary>
+
+public class EnemyAI : MonoBehaviour
 {
     // Ref
     private NavMeshAgent navAgent;
@@ -160,11 +166,11 @@ public class EnemyAI : MonoBehaviour, IDataPesistence
             navAgent.SetDestination(playerWaypoint.transform.position);
         }
 
-        // Check if the enemy has reached the player waypoint
+        // Checks if the enemy ai has reached the playerwaypoint
         if (!navAgent.pathPending && navAgent.remainingDistance < 0.5f)
         {
-            Destroy(playerWaypoint); // Remove the waypoint
-            playerWaypoint = null; // Clear reference
+            Destroy(playerWaypoint); 
+            playerWaypoint = null; 
         }
     }
 
@@ -190,10 +196,11 @@ public class EnemyAI : MonoBehaviour, IDataPesistence
     // Checks if the player is within the Vision of the Enemy
     void isPlayerVisible()
     {
-        // If the enemy is fleeing, ignore visibility checks and ensure the enemy can't see the player
+        // If the enemy is fleeing, ignore visibility checks
+        // Set as main priority if player hits enemy with a flash
         if (isFleeing)
         {
-            isVisible = false; // Ignore visibility when fleeing
+            isVisible = false; 
         }
         else
         {
@@ -207,7 +214,7 @@ public class EnemyAI : MonoBehaviour, IDataPesistence
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, direction, out hit))
                 {
-                    // If ray hits the player (targetObject), it means the player is visible
+                    // Checks if raycast hit was found
                     if (hit.transform == targetObject)
                     {
                         isVisible = true;
@@ -246,20 +253,7 @@ public class EnemyAI : MonoBehaviour, IDataPesistence
         }
     }
 
-    public void SaveData(ref GameData data)
-    {
-        data.enemyPosX = transform.position.x;
-        data.enemyPosY = transform.position.y;
-        data.enemyPosZ = transform.position.z;
-        Debug.Log($"{gameObject.name} saving position to saved data.");
-    }   
-
-    public void LoadData(GameData data)
-    {
-        transform.position = new Vector3(data.enemyPosX, data.enemyPosY, data.enemyPosZ);
-        Debug.Log($"{gameObject.name} loading position from saved data.");
-
-    }
+   
 
    
 }

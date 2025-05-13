@@ -1,16 +1,24 @@
 using UnityEngine;
 
-public class PlayerDataManager : MonoBehaviour
+public class PlayerDataManager : MonoBehaviour, IDataPesistence
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public float stamina;
+
+    private void Start()
     {
-        
+        transform.position = Vector3.zero;
+        stamina = 100f;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SaveData(ref GameData data)
     {
-        
+        data.currentStamina = stamina;
+        data.playerPos = transform.position;
+    }
+
+    public void LoadData(GameData data)
+    {
+        stamina = data.currentStamina;
+        transform.position = data.playerPos;
     }
 }

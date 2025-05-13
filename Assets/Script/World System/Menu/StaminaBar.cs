@@ -9,6 +9,8 @@ public class StaminaBar : MonoBehaviour, IDataPesistence
     public float maxStamina = 100f;
     public float currentStamina;
 
+   
+
     private void Awake()
     {
         // If there is already an instance, destroy this object to ensure only one instance exists
